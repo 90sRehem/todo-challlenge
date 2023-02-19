@@ -1,6 +1,17 @@
 import { assign, createMachine } from 'xstate';
 import { Todo } from "../types"
-import { nanoid } from "nanoid/async"
+import { nanoid } from "nanoid"
+import { storage } from '../utils';
+
+// TODO - clear input error when user starts typing again
+// TODO - clear input when user submits
+// TODO - create a inputform error state
+// TODO - add a "mark all as done" button
+// TODO - add a delete all button form completed todos
+// TODO - add a "mark all as not done" button
+// TODO - make a function to sync todos with a backend
+// TODO - add a "sync" button to sync todos with a backend
+// TODO - add function to edit todo on double click
 
 async function fetchTodos() {
     const res = await fetch("http://localhost:3000/todos")
@@ -13,7 +24,36 @@ type Events =
     | { type: "submit" }
     | { type: "delete", value: string }
     | { type: "markAsDone", value: string }
-    // | { type: "markAsDoneInContext", value: string }
+
+
+const todoStorage = storage<Todo[]>("todo-app")
+
+function getTodos(): Todo[] {
+    const todos = todoStorage.getItem("todos")
+    return todos ?? []
+}
+
+function addTodo(todos: Todo[], title: string) {
+    if (!title) throw new Error("Title is required")
+
+    const newTodo = {
+        id: nanoid(),
+        title,
+        done: false
+    }
+
+    todoStorage.setItem("todos", [...todos, newTodo])
+}
+
+function deleteTodo(todos: Todo[], id: string) {
+    if(!todos.find(todo => todo.id === id)) throw new Error("Todo not found")
+    todoStorage.setItem("todos", todos.filter(todo => todo.id !== id))
+}
+
+function toggleTodoDone(todos: Todo[], id: string) {
+    if(!todos.find(todo => todo.id === id)) throw new Error("Todo not found")
+    todoStorage.setItem("todos", todos.map(todo => todo.id === id ? { ...todo, done: !todo.done } : todo))
+}
 
 
 export const todoMachine =
@@ -28,7 +68,7 @@ export const todoMachine =
             context: {
                 todos: [] as Todo[],
                 errorMessage: undefined as string | undefined,
-                formInput: undefined as string | undefined,
+                formInput: "" as string,
             },
             services: {} as {
                 fetchTodos: {
@@ -40,7 +80,7 @@ export const todoMachine =
                 deleteTodo: {
                     data: void;
                 },
-                markAsDone: {
+                toggleDoneTodo: {
                     data: void;
                 },
             },
@@ -70,17 +110,15 @@ export const todoMachine =
                         on: {
                             onChange: {
                                 target: "idle",
-                                actions: "storeFormInput"
+                                actions: ["storeFormInput"],
                             },
 
                             submit: {
                                 target: "addTodo",
-                                // actions: "addToStore"
                             },
 
                             delete: {
                                 target: "removeTodo",
-                                // actions: "removeFromStore"
                             },
 
                             markAsDone: "#Todo Machine.markDone"
@@ -116,7 +154,6 @@ export const todoMachine =
                     src: "markAsDone",
                     onDone: {
                         target: "#Todo Machine.loading",
-                        // actions: "markAsDoneInContext"
                     },
                     onError: {
                         target: "#Todo Machine.error",
@@ -140,74 +177,20 @@ export const todoMachine =
             storeFormInput: assign((_, event) => ({
                 formInput: event.value,
             })),
-            // markAsDoneInContext: assign((context, event) => {
-            //     const todo = context.todos.find(todo => todo.id === event.value)
-            // }),
-            // addToStore: assign((context, event) => {
-            //     const newTodo = {
-            //         id: nanoid(),
-            //         title: context.formInput as string,
-            //         completed: false,
-            //     }
-            //     return {
-            //         ...context,
-            //         todos: [...context.todos, newTodo],
-            //     }
-            // }),
-            // removeFromStore: assign((context, event) => {
-            //     const newTodos = context.todos.filter(todo => todo.id !== event.value)
-            //     return {
-            //         ...context,
-            //         todos: newTodos,
-            //     }
-            // }),
         },
         services: {
             fetchTodos: async () => {
-                const res = await fetchTodos()
-                return res
+                return getTodos()
             },
             saveTodo: async (context) => {
-                const todo = {
-                    id: await nanoid(),
-                    title: context.formInput,
-                    completed: false,
-                }
-
-                if (!context.formInput) {
-                    throw new Error("Please enter a todo")
-                }
-
-                await fetch("http://localhost:3000/todos", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(todo)
-                })
+                addTodo([...context.todos], context.formInput)
             },
             deleteTodo: async (context, event) => {
-                await fetch(`http://localhost:3000/todos/${event.value}`, {
-                    method: "DELETE",
-                })
+                deleteTodo([...context.todos], event.value)
             },
             markAsDone: async (context, event) => {
-                if (!context.todos.find(todo => todo.id === event.value)) {
-                    throw new Error("Todo not found")
-                }
-
-                const todo = context.todos.find(todo => todo.id === event.value)
-                console.log("🚀 ~ file: simple.store.ts:213 ~ markAsDone: ~ todo?.completed", todo?.completed)
-
-                await fetch(`http://localhost:3000/todos/${event.value}`, {
-                    method: "PATCH",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        completed: !todo?.completed,
-                    })
-                })
+            console.log("🚀 ~ file: todo-machine.ts:192 ~ markAsDone: ~ context, event", context, event)
+            toggleTodoDone([...context.todos], event.value)
             }
         },
     })
