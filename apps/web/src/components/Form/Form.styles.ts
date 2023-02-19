@@ -6,10 +6,15 @@ export const Form = styled("form", {
     flexDirection: 'row',
     alignItems: 'center',
     padding: 0,
-    gap: 8,
-
+    gap: "$1",
     width: "100%",
     height: "100%",
+});
+
+export const FormContent = styled("div", {
+    display: 'flex',
+    gap: '$2',
+    width: '100%',
 
     "@media (max-width: 768px)": {
         flexDirection: 'column',

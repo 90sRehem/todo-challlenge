@@ -5,7 +5,7 @@ export const Container = styled("main", {
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: "$16",
+    gap: "$12",
     padding: "$4",
 
     maxWidth: 736,
