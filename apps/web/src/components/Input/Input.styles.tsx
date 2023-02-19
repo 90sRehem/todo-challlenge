@@ -1,15 +1,13 @@
 import { styled } from "../../lib";
 
 export const Input = styled('input', {
-
   display: "flex",
-  flexDirection: "row",
+  flex: 1,
   alignItems: "center",
   padding: "$4",
   gap: "$2",
 
-  width: 638,
-  height: 54,
+  width: "100%",
 
   background: "$gray-500",
 

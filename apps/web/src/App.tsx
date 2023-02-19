@@ -2,6 +2,7 @@ import { useMachine } from '@xstate/react';
 import { Input, Header, Button, Form, List, Main } from './components'
 import { globalStyles } from "./styles/global"
 import { todoMachine } from './machines';
+import * as Styles from "./App.styles"
 
 function App() {
   globalStyles()
@@ -22,12 +23,12 @@ function App() {
   function handleCompleteTodo(id: string) {
     send({
       type: "markAsDone",
-      value: id 
+      value: id
     })
   }
 
   return (
-    <>
+    <Styles.Container>
       <Header />
       <Main>
         <Form onSubmit={handleSubmit}>
@@ -50,7 +51,7 @@ function App() {
           removeTodo={handleRemoveTodo}
           markAsDone={handleCompleteTodo} />
       </Main>
-    </>
+    </Styles.Container>
   )
 }
 

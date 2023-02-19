@@ -10,8 +10,8 @@ export const Container = styled("button", {
     borderRadius: "$xs",
 
     "& svg": {
-        width: "$4",
-        height: "$4",
+        width: "$6",
+        height: "$6",
         color: "$gray-300",
     },
 

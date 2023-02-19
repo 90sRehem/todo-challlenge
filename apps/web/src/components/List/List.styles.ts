@@ -1,4 +1,3 @@
-import { ClipboardText, Trash } from "phosphor-react";
 import { styled } from "../../lib";
 
 export const Container = styled("div", {
@@ -103,9 +102,15 @@ export const EmptyList = styled("div", {
 
 
 export const Item = styled("li", {
+    width: '100%',
+});
+
+export const Card = styled("div", {
     display: 'flex',
-    alignItems: 'center',
+    alignItems: 'flex-start',
+    flexDirection: "row",
     justifyContent: 'space-between',
+    padding: "$4",
     gap: "$3",
 
     backgroundColor: "$gray-500",
@@ -115,12 +120,9 @@ export const Item = styled("li", {
     boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.86)",
     borderRadius: "$md",
 
-    padding: "$4",
 
-    minWidth: 736,
-
+    width: "100%",
     minHeight: 72,
-    maxHeight: 72,
 
     "& label": {
         fontFamily: '$default',
@@ -130,23 +132,24 @@ export const Item = styled("li", {
         lineHeight: "$default",
 
         maxWidth: 632,
-        maxHeight: 72,
+        width: "90%",
 
         color: "$gray-100",
+
+        lineBreak: "anywhere",
+
+        "&[data-checked=true]": {
+            textDecoration: "line-through",
+            color: "$gray-300",
+        },
+        "&[data-visible=true]": {
+            display: "none",
+        },
     },
 
-    // "& button": {
-    //     width: "$6",
-    //     height: "$6",
-    // },
-
-    // "& svg": {
-    //     width: "$6",
-    //     height: "$6",
-    // },
+    "& input": {
+        "&[data-visible=false]": {
+            display: "none",
+        },
+    },
 });
-
-// export const Icon = styled(Trash, {
-//     width: "$6",
-//     height: "$6",
-// });

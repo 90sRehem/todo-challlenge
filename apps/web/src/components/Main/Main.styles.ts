@@ -4,6 +4,11 @@ export const Container = styled("main", {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     gap: "$16",
+    padding: "$4",
+
+    maxWidth: 736,
+    width: "100%",
+    height: "100%",
 });

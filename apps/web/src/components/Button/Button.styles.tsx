@@ -33,4 +33,8 @@ export const Button = styled('button', {
         cursor: 'not-allowed',
         background: "$gray-300",
     },
+
+    "@media (max-width: 768px)": {
+        width: "100%"
+    },    
 })
