@@ -7,7 +7,7 @@ export function Button({children, ...rest}: ButtonProps) {
   return (
     <Styles.Button {...rest}>
       {children}
-      <PlusCircle size={16} />
+      <PlusCircle />
     </Styles.Button>
   )
 }

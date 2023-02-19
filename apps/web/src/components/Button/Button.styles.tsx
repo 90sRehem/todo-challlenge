@@ -15,8 +15,7 @@ export const Button = styled('button', {
     lineHeight: "$default",
     color: "$gray-100",
 
-    width: 90,
-    height: 54,
+    height: "100%",
 
     background: "$blue-dark",
     borderRadius: "$md",
@@ -24,6 +23,10 @@ export const Button = styled('button', {
     border: 'none',
     outline: 'none',
     transition: 'background 0.2s',
+
+    "svg": {
+        width: "$7",
+    },
 
     "&:not(:disabled):hover": {
         background: "$blue",
@@ -35,6 +38,9 @@ export const Button = styled('button', {
     },
 
     "@media (max-width: 768px)": {
-        width: "100%"
-    },    
+        width: "100%",
+        svg: {
+            width: "$5",
+        }
+    },
 })
