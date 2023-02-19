@@ -34,6 +34,7 @@ function App() {
         <Form onSubmit={handleSubmit}>
           <Input
             name='todo'
+            errorMessage={state.context.errorMessage}
             placeholder='Add a todo'
             onChange={(e) => {
               send({

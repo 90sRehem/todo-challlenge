@@ -1,5 +1,14 @@
 import { styled } from "../../lib";
 
+export const Container = styled("div", {
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'flex-start',
+  justifyContent: 'center',
+  width: '100%',
+});
+
+
 export const Input = styled('input', {
   display: "flex",
   flex: 1,
@@ -34,3 +43,10 @@ export const Input = styled('input', {
     color: '$gray400',
   },
 })
+
+export const ErrorMessage = styled('label', {
+  minHeight: 20,
+  "&[data-visible='false']": {
+    visibility: 'hidden',
+  },
+});

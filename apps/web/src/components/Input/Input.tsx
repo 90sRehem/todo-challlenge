@@ -3,16 +3,24 @@ import { forwardRef, ForwardRefRenderFunction } from 'react'
 
 export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
     name: string
-    placeholder: string
+    errorMessage?: string;
 }
 
 const CustomInput: ForwardRefRenderFunction<
     HTMLInputElement,
     InputProps
-> = ({ name, placeholder, ...rest }, ref) => {
-    return (
-        <Styles.Input name={name} placeholder={placeholder} ref={ref} {...rest} />
-    )
-}
+> = ({
+    name,
+    placeholder,
+    errorMessage,
+    ...rest },
+    ref) => {
+        return (
+            <Styles.Container>
+                <Styles.Input name={name} placeholder={placeholder} ref={ref} {...rest} />
+                <Styles.ErrorMessage htmlFor={name} data-visible={!!errorMessage}>{errorMessage}</Styles.ErrorMessage>
+            </Styles.Container>
+        )
+    }
 
 export const Input = forwardRef(CustomInput)
