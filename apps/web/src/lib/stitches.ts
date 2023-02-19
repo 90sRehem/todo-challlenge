@@ -1,0 +1,78 @@
+import { createStitches, defaultThemeMap } from "@stitches/react";
+
+export const {
+    styled,
+    css,
+    globalCss,
+    keyframes,
+    getCssText,
+    theme,
+    createTheme,
+    config,
+} = createStitches({
+    themeMap: {
+        ...defaultThemeMap,
+        height: 'space',
+        width: 'space',
+    },
+    theme: {
+        colors: {
+            "purple": "#8284FA",
+            "purple-dark": "#5E60CE",
+            "blue": "#4EA8DE",
+            "blue-dark": "#1E6F9F",
+            "gray-700": "#0D0D0D",
+            "gray-600": "#1A1A1A",
+            "gray-500": "#262626",
+            "gray-400": "#333333",
+            "gray-300": "#808080",
+            "gray-200": "#D9D9D9",
+            "gray-100": "#F2F2F2",
+            "danger": "#E25858",
+            white: '#FFF',
+            black: '#000',
+        },
+        fonts: {
+            default: "Inter, sans-serif",
+        },
+        fontWeights: {
+            "regular": 400,
+            "medium": 500,
+            "bold": 700,
+        },
+        lineHeights: {
+            default: "140%",
+        },
+        fontSizes: {
+            "xs": "0.75rem",
+            "sm": "0.875rem",
+            "md": "1rem",
+        },
+        radii: {
+            px: '1px',
+            xs: '4px',
+            sm: '6px',
+            md: '8px',
+            lg: '16px',
+            full: '99999px',
+        },
+        space: {
+            0: '0.125rem',
+            1: '0.25rem',
+            2: '0.5rem',
+            3: '0.75rem',
+            4: '1rem',
+            5: '1.25rem',
+            6: '1.5rem',
+            7: '1.75rem',
+            8: '2rem',
+            10: '2.5rem',
+            12: '3rem',
+            16: '4rem',
+            20: '5rem',
+            40: '10rem',
+            64: '16rem',
+            80: '20rem',
+        },
+    },
+});
