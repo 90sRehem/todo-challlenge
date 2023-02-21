@@ -40,6 +40,6 @@ jobs:
           TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
           TURBO_TEAM: 90srehem
       - name: Deploy with gh-pages
-        run: pnpm run deploy
+        run: pnpm run deploy-gh
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
