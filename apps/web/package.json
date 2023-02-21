@@ -3,12 +3,12 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://90srehem.github.io/todo-challlenge/",
+  "homepage": "https://github.com/90sRehem/todo-challlenge",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "deploy": "gh-pages -d dist"
+    "deploy": "vite build --base /web/ && gh-pages -d dist"
   },
   "dependencies": {
     "@radix-ui/react-checkbox": "^1.0.1",
