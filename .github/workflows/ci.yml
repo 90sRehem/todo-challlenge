@@ -40,6 +40,9 @@ jobs:
           TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
           TURBO_TEAM: 90srehem
       - name: Deploy with gh-pages
-        run: pnpm run deploy
+        run: |
+          git config --global user.name "Jonathan Rehem"
+          git config --global user.email "jonathan.de.oliveira@live.com"
+          pnpm run deploy
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
