@@ -43,6 +43,7 @@ jobs:
         run: |
           git config --global user.name "Jonathan Rehem"
           git config --global user.email "jonathan.de.oliveira@live.com"
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
           pnpm run deploy
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
