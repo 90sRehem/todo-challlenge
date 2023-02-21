@@ -48,11 +48,11 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
-          publish_branch: gh-pages
-          cname: 90srehem.com
-          keep_files: true
-          force_orphan: true
-          user_name: 90srehem
-          user_email: jonathan.de.oliveira@live.com
+          # publish_branch: gh-pages
+          # cname: 90srehem.com
+          # keep_files: true
+          # force_orphan: true
+          # user_name: 90srehem
+          # user_email: jonathan.de.oliveira@live.com
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
