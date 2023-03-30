@@ -1,8 +1,7 @@
 import { assign, createMachine } from 'xstate';
+import { addTodo, removeTodo, toggleTodo } from '@app/stores';
 import { Todo } from "../types"
-import { nanoid } from "nanoid"
 import { storage } from '../utils';
-import { addTodo, toggleTodo, removeTodo } from '@app/stores/todo-store';
 
 // TODO - clear input error when user starts typing again
 // TODO - clear input when user submits
