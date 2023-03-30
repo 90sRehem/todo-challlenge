@@ -11,7 +11,8 @@
     "dev": "turbo run dev",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "deploy": "turbo run deploy"
+    "deploy": "turbo run deploy",
+    "test": "turbo run test"
   },
   "devDependencies": {
     "eslint-config-custom": "workspace:*",
