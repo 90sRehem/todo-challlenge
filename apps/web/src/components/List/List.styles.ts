@@ -73,8 +73,7 @@ export const EmptyList = styled("div", {
     gap: "$4",
 
     width: '100%',
-    minWidth: 736,
-    height: 244,
+    height: '100%',
 
     padding: "$16 $6",
 
@@ -99,7 +98,6 @@ export const EmptyList = styled("div", {
         height: "calc($12 + 0.5rem)",
     },
 });
-
 
 export const Item = styled("li", {
     width: '100%',

@@ -68,9 +68,9 @@ export function List({ todos, removeTodo, markAsDone }: ListProps) {
                                     htmlFor="checkbox"
                                     data-checked={item.done}
                                     data-visible={editing === item.id}
-                                    // onDoubleClick={() => {
-                                    //     handleEdit(item.id);
-                                    // }}
+                                // onDoubleClick={() => {
+                                //     handleEdit(item.id);
+                                // }}
                                 >
                                     {item.title}
                                 </label>

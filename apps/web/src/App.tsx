@@ -35,7 +35,7 @@ function App() {
           <Input
             name='todo'
             errorMessage={state.context.errorMessage}
-            placeholder='Add a todo'
+            placeholder='Adicionar tarefa'
             onChange={(e) => {
               send({
                 type: "onChange",
@@ -50,7 +50,8 @@ function App() {
         <List
           todos={state.context.todos ?? []}
           removeTodo={handleRemoveTodo}
-          markAsDone={handleCompleteTodo} />
+          markAsDone={handleCompleteTodo}
+        />
       </Main>
     </Styles.Container>
   )

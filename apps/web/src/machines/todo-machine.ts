@@ -1,6 +1,6 @@
 import { assign, createMachine } from 'xstate';
+import { addTodo, removeTodo, toggleTodo } from '@app/stores';
 import { Todo } from "../types"
-import { nanoid } from "nanoid"
 import { storage } from '../utils';
 
 // TODO - clear input error when user starts typing again
@@ -12,12 +12,6 @@ import { storage } from '../utils';
 // TODO - make a function to sync todos with a backend
 // TODO - add a "sync" button to sync todos with a backend
 // TODO - add function to edit todo on double click
-
-async function fetchTodos() {
-    const res = await fetch("http://localhost:3000/todos")
-    const data = await res.json()
-    return data
-}
 
 type Events =
     | { type: "onChange", value: string }
@@ -32,29 +26,6 @@ function getTodos(): Todo[] {
     const todos = todoStorage.getItem("todos")
     return todos ?? []
 }
-
-function addTodo(todos: Todo[], title: string) {
-    if (!title) throw new Error("Title is required")
-
-    const newTodo = {
-        id: nanoid(),
-        title,
-        done: false
-    }
-
-    todoStorage.setItem("todos", [...todos, newTodo])
-}
-
-function deleteTodo(todos: Todo[], id: string) {
-    if(!todos.find(todo => todo.id === id)) throw new Error("Todo not found")
-    todoStorage.setItem("todos", todos.filter(todo => todo.id !== id))
-}
-
-function toggleTodoDone(todos: Todo[], id: string) {
-    if(!todos.find(todo => todo.id === id)) throw new Error("Todo not found")
-    todoStorage.setItem("todos", todos.map(todo => todo.id === id ? { ...todo, done: !todo.done } : todo))
-}
-
 
 export const todoMachine =
     /** @xstate-layout N4IgpgJg5mDOIC5QBUD2FUAICyBDAxgBYCWAdmAHQA2quEZUAxBuRWQG6oDWlaGOBEqxp0GCDqny4ALsVSkA2gAYAuspWJQAB1Sxis+ZpAAPRACYALAHYKZgJwA2ABxWArABoQAT0QWnARgp-AGYzALNXAF9Izz4sPCIyShF6UiYwACcM1AyKLSoZADMcgFsKOIFE4VpUqHFSTikDRVV1Ix09ZqNTBAibe2c3Tx8EAIoomJAKhKFKYoySgGVpGUpiCCowRnkAYUJcNLA2pBAO-TlSbsRgtworYItXJ2ClJ3tQhwdhxAczM1tgq4zEprBY7KDgtFYuh4oIkhR5ksVtI1hstrAAK4AIxK+mO2l050MJx6DlcNhBFiUdiU-iUnysr2+CAc-gsticrlC-jsQN+Fkhk2mcNYiOWqwodAgcWY8jWDW4vBhlVmCNK4pRkog0ph9UaMgu6nxp0JXRJ5nJtkcLg83nMYIodgGLjBdjdbqsUKmypm8LFyMoUplmWyuXyRVK5R9Irm6oDWp1GD1kgN8iNqnapouVxZLwoSmBZLMDnpDkZTmZLycFCcSis1lcr1cIVZDi9wqqsYWGtRm22pAASmASqh2EcMyczmbQD1XE6KA8LMD-PW7M9XBZmVY-vngo5i0WHBYBe3o521d34xlh6OwDKWPLODwKBAwJsUcap9nzaMN0E3FY4S2iM9aBJYboOOCbxLjy0STKQ6BwEYHazJmnTfjOiAALRfHaCBYa4jrum8LoCoCTgWKe-C+tUohpGhRKXD+S7Mv4-iEeSQFUbC54hjkDHTiYvgPACApDHhbEOBQjzBP4ETcSqfpxqsAkYUJCChDY9yPM8rzvAezJ-IELz1q4Dg3IBnKOApNFdkiErrJsqnEphCDWNWtJmREzJAsEC6AnYNwTNC1Exhe9makGMLOUxrlWPOxZsvcZZKDc3l4ce1aMm6FFclYVglpRQpnqq-oSteI5jnEMU5vc1ZsfY1jsY11jMpyNg8korhPEu1gDHBkRAA */
@@ -183,14 +154,15 @@ export const todoMachine =
                 return getTodos()
             },
             saveTodo: async (context) => {
-                addTodo([...context.todos], context.formInput)
+                const todo = addTodo([...context.todos], context.formInput);
+                todoStorage.setItem("todos", todo);
             },
             deleteTodo: async (context, event) => {
-                deleteTodo([...context.todos], event.value)
+                removeTodo([...context.todos], event.value)
             },
             markAsDone: async (context, event) => {
-            console.log("🚀 ~ file: todo-machine.ts:192 ~ markAsDone: ~ context, event", context, event)
-            toggleTodoDone([...context.todos], event.value)
+                console.log("🚀 ~ file: todo-machine.ts:192 ~ markAsDone: ~ context, event", context, event)
+                toggleTodo([...context.todos], event.value)
             }
         },
     })
